@@ -15,12 +15,18 @@
 syscall free(void *ptr)
 {
     struct memblock *block;
-
+	ulong nbytes;
     /* TODO:
      *      1) set block to point to memblock to be free'd (ptr)
      *      2) find accounting information of the memblock
      *      3) call freemem syscall on the block with its length
      */
+
+	block = (struct memblock *)ptr;
+	block = -1 + block;
+	nbytes = block->length;
+
+	freemem(block, nbytes);
 
     return OK;
 }

@@ -91,7 +91,7 @@ void testcases(void)
     c = kgetc();
     switch (c)
     {
-/*    case '0':
+    case '0':
         // Test user_none
         kprintf("This is a test of ...");
         user_none();
@@ -112,7 +112,7 @@ void testcases(void)
         }
         kprintf("\r\n");
         break;
-*/
+
     case '3':
         // Create three copies of a process, and let them play.
         ready(create((void *)testmain, INITSTK,5, "MAIN1",2,0,NULL),

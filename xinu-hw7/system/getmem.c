@@ -38,6 +38,36 @@ void *getmem(ulong nbytes)
      *      - Restore interrupts
      *      - return memory address if successful
      */
+	int ps = disable();
+	
+	curr = (struct memblock *)(freelist.head);
+	prev = (struct memblock *) &freelist;
+	memhead *freehead = &freelist;
 
-    return (void *)SYSERR;
+	while(curr != NULL)
+	{
+
+		if((curr->length) > nbytes)
+		{
+			leftover = (struct memblock *)(nbytes + ((ulong)curr));
+			leftover->length = (curr->length) - nbytes;
+		
+			freehead->size = freehead->size - nbytes;
+
+			leftover->next = curr->next;
+			prev->next = leftover;
+			
+			curr->length = nbytes;
+
+			restore(ps);
+			return(curr);
+
+		}
+		
+
+		prev = curr;
+		curr = curr->next;
+	}
+    
+	return (void *)SYSERR;
 }

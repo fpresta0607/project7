@@ -43,7 +43,7 @@ syscall create(void *funcaddr, ulong ssize, uint tickets, char *name, ulong narg
     ssize = (ulong)(ssize + 3) & 0xFFFFFFFC; 
     
     //round up to even boundary
-    saddr = (ulong *)getstk(ssize);  //allocate new stack and pid
+    saddr = (ulong *)getmem(ssize);  //allocate new stack and pid
     pid = newpid();
 
 
@@ -111,12 +111,6 @@ syscall create(void *funcaddr, ulong ssize, uint tickets, char *name, ulong narg
 	}
 	va_end(ap);
 
-   // saddr[CTX_SP] = &saddr[CTX_PC + 1]; 
-   // saddr[CTX_PC] = funcaddr;
-   // saddr[CTX_LR] = &userret;
-
-
-    //saddr[CTX_IP] = (ARM_MODE_SYS | ARM_F_BIT); 
     return pid;
 }
 

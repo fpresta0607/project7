@@ -27,7 +27,7 @@ syscall freemem(void *memptr, ulong nbytes)
     /* make sure block is in heap */
     if ((0 == nbytes)
         || ((ulong)memptr < freelist.base)
-        || ((ulong)memptr > freelist.base + freelist.bound)
+        || ((ulong)memptr > freelist.base + freelist.bound))
     {
         return SYSERR;
     }
@@ -45,6 +45,28 @@ syscall freemem(void *memptr, ulong nbytes)
      *      - Coalesce with next block if adjacent
      *      - Restore interrupts
      */
+	int ps = disable();
+		
+	next = (struct memblock*)freelist.head;
+	prev = (struct memblock*)&freelist;
 
+	while(next != NULL)
+	{
+		if((prev<block) && (block < next))
+		{
+			prev->next = block;
+			block->next = next;
+			
+			block->length = nbytes;
+
+			freelist.size  = freelist.size + nbytes;
+			break;
+		}
+
+		prev = next;
+		next = next->next;
+	}
+	
+	restore(ps);
     return OK;
 }
