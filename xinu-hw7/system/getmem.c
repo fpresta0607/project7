@@ -60,6 +60,12 @@ void *getmem(ulong nbytes)
 			curr->length = nbytes;
 
 			restore(ps);
+			memblk *p = freelist.head;
+while(p!=NULL){
+	kprintf("get %d bytes of memory : [0x%08X : %10d : 0x%08X]\n",nbytes, p, p->length, p->next);
+	p = p->next;
+	
+}
 			return(curr);
 
 		}
@@ -68,6 +74,5 @@ void *getmem(ulong nbytes)
 		prev = curr;
 		curr = curr->next;
 	}
-    
 	return (void *)SYSERR;
 }

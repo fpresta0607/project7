@@ -20,7 +20,7 @@ process main(void)
     // TODO: Put your main program for codebreaker here.
     //       Replace any calls to printf() with kprintf().
     //       Replace any calls to getchar() with kgetc().
-    testcases();
+    main();
     while (1)
         ;
 

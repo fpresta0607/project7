@@ -68,5 +68,8 @@ syscall freemem(void *memptr, ulong nbytes)
 	}
 	
 	restore(ps);
+	memblk *p = freelist.head;
+	kprintf("memory freed: [0x%08X : freed %10d bytes : 0x%08X]\n", p, p->length, p->next);	
+
     return OK;
 }

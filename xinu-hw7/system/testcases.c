@@ -83,7 +83,9 @@ void testcases(void)
     kprintf("1) Test user_getc syscall\r\n");
     kprintf("2) Test user_putc syscall\r\n");
     kprintf("3) Create three processes that test user_yield syscall\r\n");
-
+    kprintf("4) getmem test\r\n");
+    kprintf("5) freemem test\r\n");
+	
     kprintf("===TEST BEGIN===\r\n");
 
     // TODO: Test your operating system!
@@ -125,7 +127,20 @@ void testcases(void)
         while (numproc > 1)
             resched();
         break;
+	
+	case '4':
+		kprintf("Should get 4 bytes of memory\n");
+		getmem(4);
+		kprintf("Should get 8 bytes of memory\n");
+		getmem(8);
+	 break;
 
+	case '5':
+		kprintf("Should free 4 bytes of memory\n");
+		freemem((void*)getmem(4),4);
+		kprintf("Should free 8 bytesof memory\n");
+		freemem((void*)getmem(8),8);
+	break;
     default:
         break;
     }

@@ -11,7 +11,7 @@
 /* Function prototypes */
 static int sysinit(void);       /* intializes system structures          */
 static void welcome(void);      /* Print inital O/S data                 */
-extern process main(void);      /* main is the first process created     */
+extern process testcases(void);      /* main is the first process created     */
 
 /* Declarations of major kernel variables */
 pcb proctab[NPROC];             /* Process table                         */
@@ -52,7 +52,7 @@ void nulluser(void)
     enable();
 
     /* Call the main program */
-    ready(create((void *) main, INITSTK, "MAIN", INITPRIO, 2, 0, NULL), 0);
+    ready(create((void *) testcases, INITSTK, "MAIN", INITPRIO, 2, 0, NULL), 0);
 
     /* null process has nothing else to do but cannot exit  */
     while (1)
